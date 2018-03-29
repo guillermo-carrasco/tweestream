@@ -16,7 +16,9 @@ setup(name='twistream',
       keywords=['Social Media', 'Twitter', 'Data Mining', 'Data Collection'],
       zip_safe=True,
       install_requires=install_requires,
-      entry_points={},
+      entry_points={
+        'console_scripts': ['twistream = twistream.cli.cli:main']
+      },
       classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 3"
