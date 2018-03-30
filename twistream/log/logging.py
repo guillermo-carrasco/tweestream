@@ -1,6 +1,5 @@
 import logging
-
-from twistream.config import config
+import os
 
 # get root logger
 ROOT_LOG = logging.getLogger('twistream')
@@ -40,4 +39,4 @@ def init_logger_file(log_file, log_level='INFO'):
     file_handle.setFormatter(formatter)
     ROOT_LOG.addHandler(file_handle)
 
-init_logger_file(config.get_log_file())
+init_logger_file(os.path.join(os.environ['HOME'], '.twistream', 'twistream.log'))
