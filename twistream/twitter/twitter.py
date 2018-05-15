@@ -1,9 +1,9 @@
 import tweepy
 
 from twistream.config import config
-from twistream.log import logging
+from twistream.log import log
 
-LOG = logging.get_logger()
+LOG = log.get_logger()
 
 def _authorize():
     """ Authorization with Twitter API

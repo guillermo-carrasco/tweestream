@@ -3,9 +3,9 @@ import os
 
 from dateutil.parser import parse
 
-from twistream.log import logging
+from twistream.log import log
 
-LOG = logging.get_logger()
+LOG = log.get_logger()
 
 
 def validate_date(ctx, args, date):
@@ -32,7 +32,7 @@ def main(ctx, log_level, hashtags):
 
 
 @main.command(help='Schedule when to read from Twitter Stream API')
-@click.argument('from-date', callback=validate_date,)
+@click.argument('from-date', callback=validate_date)
 @click.argument('to-date', callback=validate_date)
 @click.pass_context
 def schedule(ctx, from_date, to_date):

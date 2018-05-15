@@ -1,3 +1,5 @@
+import os
+
 from setuptools import setup, find_packages
 
 install_requires = []
@@ -16,6 +18,7 @@ setup(name='twistream',
       keywords=['Social Media', 'Twitter', 'Data Mining', 'Data Collection'],
       zip_safe=True,
       install_requires=install_requires,
+      data_files=[(os.path.join(os.environ['HOME'], '.twistream'), [])],
       entry_points={
         'console_scripts': ['twistream = twistream.cli.cli:main']
       },

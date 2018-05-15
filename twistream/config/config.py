@@ -2,9 +2,9 @@ import os
 
 import yaml
 
-from twistream.log import logging
+from twistream.log import log
 
-LOG = logging.get_logger()
+LOG = log.get_logger()
 
 CONFIG_DIR = os.path.join(os.environ['HOME'], '.twistream')
 CONFIG_FILE = os.path.join(os.environ['HOME'], '.twistream', 'twistream.yml')

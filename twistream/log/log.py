@@ -18,13 +18,15 @@ LOG_LEVELS = {
     'DEBUG': logging.DEBUG
 }
 
+
 def get_logger():
     return ROOT_LOG
+
 
 def set_level(level):
     ROOT_LOG.setLevel(level)
 
-# XXX: Not used by now
+
 def init_logger_file(log_file, log_level='INFO'):
     """ Append a FileHandler to the root logger.
     :param str log_file: Path to the log file
