@@ -1,5 +1,4 @@
 import click
-import os
 
 from dateutil.parser import parse
 
@@ -22,7 +21,7 @@ def validate_date(ctx, args, date):
               help='Comma separated list of hashtags to follow (exclude #)')
 @click.pass_context
 def main(ctx, log_level, hashtags):
-    LOG.setLevel(log_level)
+    log.set_level(log_level)
     ctx.obj = {
         'log_level': log_level,
         'hashtags':hashtags

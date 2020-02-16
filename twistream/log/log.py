@@ -25,6 +25,8 @@ def get_logger():
 
 def set_level(level):
     ROOT_LOG.setLevel(level)
+    for h in ROOT_LOG.handlers:
+        h.setLevel(level)
 
 
 def init_logger_file(log_file, log_level='INFO', create_file=True):
