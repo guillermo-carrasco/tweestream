@@ -27,11 +27,16 @@ def set_level(level):
     ROOT_LOG.setLevel(level)
 
 
-def init_logger_file(log_file, log_level='INFO'):
+def init_logger_file(log_file, log_level='INFO', create_file=True):
     """ Append a FileHandler to the root logger.
     :param str log_file: Path to the log file
     :param str log_level: Logging level
+    :param bool create_file: Create login file if not present
     """
+    log_base_path = os.path.dirname(log_file)
+    if not os.path.exists(log_base_path):
+        os.mkdir(log_base_path)
+
     log_level = LOG_LEVELS[log_level] if log_level in LOG_LEVELS.keys() else logging.INFO
 
     ROOT_LOG.setLevel(log_level)
@@ -40,5 +45,6 @@ def init_logger_file(log_file, log_level='INFO'):
     file_handle.setLevel(log_level)
     file_handle.setFormatter(formatter)
     ROOT_LOG.addHandler(file_handle)
+
 
 init_logger_file(os.path.join(os.environ['HOME'], '.twistream', 'twistream.log'))
