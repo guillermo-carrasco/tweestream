@@ -1,17 +1,9 @@
 import click
 
-from dateutil.parser import parse
-
 from twistream.log import log
+from twistream.twitter import twitter
 
 LOG = log.get_logger()
-
-
-def validate_date(ctx, args, date):
-    try:
-        return parse(date)
-    except ValueError:
-        raise click.BadParameter('Dates should be in format YY-MM-DDTHH:MM:SS')
 
 
 @click.group(invoke_without_command=True)
@@ -27,12 +19,7 @@ def main(ctx, log_level, hashtags):
         'hashtags':hashtags
     }
     hashtags = [h for h in hashtags.split(',')] if hashtags is not None else []
-    LOG.debug(f"Using hashtags: {', '.join(hashtags)}")
+    LOG.debug(f"Listening for tweets with hashtags: {', '.join(hashtags)}")
 
-
-@main.command(help='Schedule when to read from Twitter Stream API')
-@click.argument('from-date', callback=validate_date)
-@click.argument('to-date', callback=validate_date)
-@click.pass_context
-def schedule(ctx, from_date, to_date):
-    print(ctx.obj)
+    # Initialize stream listener ans start listening
+    twitter.listen_hashtags(hashtags)
