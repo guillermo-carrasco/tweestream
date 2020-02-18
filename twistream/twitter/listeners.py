@@ -1,11 +1,16 @@
 import tweepy
 
+from tweepy import StreamListener
 from twistream.log import log
 
 LOG = log.get_logger()
 
 
-class HashtagListener(tweepy.StreamListener):
+class HashtagListener(StreamListener):
+
+    def __init__(self, backend):
+        StreamListener.__init__(self)
+        self.backend = backend
 
     def on_error(self, status_code):
         if status_code == 401:
@@ -19,4 +24,5 @@ class HashtagListener(tweepy.StreamListener):
         # returning non-False reconnects the stream, with backoff.
 
     def on_status(self, status):
-        print(status.text)
+        LOG.debug(status.text)
+        self.backend.persist_status(status)
