@@ -1,4 +1,5 @@
 import os
+import sys
 
 import yaml
 
@@ -36,6 +37,6 @@ def get_config(subsection=None):
         with open(CONFIG_FILE, 'r') as f:
             config = yaml.load(f, Loader=yaml.FullLoader)
     except FileNotFoundError:
-        LOG.warn('Configuration file not found, not using configuration')
+        sys.exit('Configuration file not found, not using configuration')
 
     return config.get(subsection, {}) if subsection else config

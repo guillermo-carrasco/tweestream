@@ -4,8 +4,8 @@ twitter:
   access_token: your_acces_token
   access_token_secret: your_acces_token_secret
 
-logging:
-  log_level: INFO
+backend: backend_name
 
-persist:
-  engine: sqlite
+backend_params:
+  db: twistream
+

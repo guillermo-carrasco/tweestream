@@ -28,12 +28,29 @@ twitter:
   consumer_secret: your_consumer_secret             
   access_token_key: your_access_token_key             
   access_token_secret: your_access_token_secret       
+      
 
-logging:                  
-  log_level: INFO         
+backend: backend_name                  
 
-persist:                  
-  engine: sqlite
+backend_params:
+    username: db_username
+    password: db_password
+```
+
+#### Different backends
+Right now twistream only supports sqlite, the backend and backend sections in your
+configuration file should look like this:
+
+```
+backend: sqlite
+
+backend_params:
+    db: /path/to/your/db
 ```
 
 ## Usage
+Once you have createed the configuration file, just execute:
+
+```
+twistream --hashtags hashtags,to,follow
+```
