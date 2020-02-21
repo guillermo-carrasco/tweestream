@@ -1,6 +1,5 @@
-import tweepy
-
 from tweepy import StreamListener
+
 from twistream.log import log
 
 LOG = log.get_logger()

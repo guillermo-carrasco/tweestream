@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from twistream.backends.models import Base, Status
+from twistream.twitter.models import Base, Status
 
 
 class SqliteStorageBackend(object):

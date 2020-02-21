@@ -4,9 +4,9 @@ import click
 import tweepy
 import yaml
 
+from twistream.backends.sqlite import SqliteStorageBackend
 from twistream.log import log
 from twistream.twitter import client, listeners
-from twistream.backends.sqlite import SqliteStorageBackend
 
 LOG = log.get_logger()
 
@@ -47,7 +47,10 @@ def collect(config_file, log_level, hashtags):
     # Initialize stream listener and start listening
     storage_backend = BACKENDS[backend].get('object')(backend_params)
     listener = listeners.HashtagListener(storage_backend)
-    auth = client.get_api().auth
+    auth = client.get_api(config.get('twitter').get('consumer_key'),
+                          config.get('twitter').get('consumer_secret'),
+                          config.get('twitter').get('access_token'),
+                          config.get('twitter').get('access_token_secret')).auth
     stream = tweepy.Stream(auth=auth, listener=listener)
     stream.filter(track=hashtags)
 
