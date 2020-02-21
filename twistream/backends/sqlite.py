@@ -7,7 +7,7 @@ from twistream.backends.models import Base, Status
 class SqliteStorageBackend(object):
 
     def __init__(self, params):
-        self.engine = create_engine(f'sqlite:///{params.get("db")}')
+        self.engine = create_engine(f'sqlite:///{params.get("db_path")}')
         self.session = sessionmaker(bind=self.engine)()
         self.create_tables()
 

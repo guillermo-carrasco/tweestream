@@ -20,7 +20,7 @@ setup(name='twistream',
       install_requires=install_requires,
       data_files=[(os.path.join(os.environ['HOME'], '.twistream'), [])],
       entry_points={
-        'console_scripts': ['twistream = twistream.cli.cli:main']
+        'console_scripts': ['twistream = twistream.cli.cli:entry']
       },
       classifiers=[
         "Programming Language :: Python",
