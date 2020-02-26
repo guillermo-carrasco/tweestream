@@ -34,7 +34,7 @@ def collect(config_file, log_level, hashtags):
     log.set_level(log_level)
 
     with open(config_file, 'r') as f:
-        config = yaml.load(f)
+        config = yaml.load(f, Loader=yaml.FullLoader)
 
     backend = config.get('backend')
     backend_params = config.get('backend_params')
@@ -52,7 +52,7 @@ def collect(config_file, log_level, hashtags):
                           config.get('twitter').get('access_token'),
                           config.get('twitter').get('access_token_secret')).auth
     stream = tweepy.Stream(auth=auth, listener=listener)
-    stream.filter(track=hashtags)
+    stream.filter(track=hashtags, is_async=True)
 
 
 @entry.command(help='Create a configuration file to run your data collections')

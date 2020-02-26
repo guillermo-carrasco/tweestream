@@ -1,17 +1,18 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from twistream.backends.base import BaseStorageBackend
 from twistream.twitter.models import Base, Status
 
 
-class SqliteStorageBackend(object):
+class SqliteStorageBackend(BaseStorageBackend):
 
     def __init__(self, params):
         self.engine = create_engine(f'sqlite:///{params.get("db_path")}')
         self.session = sessionmaker(bind=self.engine)()
-        self.create_tables()
+        self.init_backend()
 
-    def create_tables(self):
+    def init_backend(self):
         Base.metadata.create_all(self.engine)
 
     def persist_status(self, status):
