@@ -12,8 +12,11 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          command: pytest tests
-          name: Test
+          command: sudo pip install .
+          name: Install twistream
+      - run:
+          command: pytest tests -vv
+          name: Run tests
 
 workflows:
   main:
