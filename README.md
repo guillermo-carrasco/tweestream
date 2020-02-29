@@ -1,5 +1,7 @@
 # Twistream: Twitter Stream API data collection
 
+[![CircleCI](https://circleci.com/gh/guillermo-carrasco/twistream.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
+
 Twistream helps you automatically collect and store data from Twitter Stream API.
 
 ## Installation
