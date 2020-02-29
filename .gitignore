@@ -93,4 +93,8 @@ ENV/
 # PyCharm
 .idea
 
+# Twistream specific files
 config.yaml
+TODOS
+*.db
+

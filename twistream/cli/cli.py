@@ -26,12 +26,13 @@ def entry():
 
 @entry.command(help='Connect to the real-time Twitter Streaming API and start collecting tweets')
 @click.argument('config_file')
-@click.option('--log-level', type=click.Choice(['INFO', 'DEBUG', 'ERROR']),
-              default='INFO')
-@click.option('--hashtags', type=click.STRING,
-              help='Comma separated list of hashtags to follow (exclude #)')
-def collect(config_file, log_level, hashtags):
+@click.option('--log-level', type=click.Choice(['INFO', 'DEBUG', 'ERROR']), default='INFO')
+@click.option('--hashtags', type=click.STRING, help='Comma separated list of hashtags to follow (exclude #)')
+@click.option('--exclude-retweets', is_flag=True, help='Do not exclude retweets from the collection')
+def collect(config_file, log_level, hashtags, exclude_retweets):
     log.set_level(log_level)
+
+    import ipdb; ipdb.set_trace()
 
     with open(config_file, 'r') as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
@@ -46,7 +47,7 @@ def collect(config_file, log_level, hashtags):
 
     # Initialize stream listener and start listening
     storage_backend = BACKENDS[backend].get('object')(backend_params)
-    listener = listeners.HashtagListener(storage_backend)
+    listener = listeners.HashtagListener(storage_backend, exclude_retweets=exclude_retweets)
     auth = client.get_api(config.get('twitter').get('consumer_key'),
                           config.get('twitter').get('consumer_secret'),
                           config.get('twitter').get('access_token'),

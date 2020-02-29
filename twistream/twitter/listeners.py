@@ -7,9 +7,10 @@ LOG = log.get_logger()
 
 class HashtagListener(StreamListener):
 
-    def __init__(self, backend):
+    def __init__(self, backend, exclude_retweets):
         StreamListener.__init__(self)
         self.backend = backend
+        self.exclude_retweets = exclude_retweets
 
     def on_error(self, status_code):
         if status_code == 401:
@@ -23,5 +24,9 @@ class HashtagListener(StreamListener):
         # returning non-False reconnects the stream, with backoff.
 
     def on_status(self, status):
-        LOG.debug(status.text)
-        self.backend.persist_status(status)
+        if self.exclude_retweets and hasattr(status, 'retweeted_status'):
+            pass
+
+        else:
+            LOG.debug(status.text)
+            self.backend.persist_status(status)
