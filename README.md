@@ -49,6 +49,9 @@ backend_params:
 ```
 
 ## Usage
+
+__**Remember that `--help` is always an available option**__
+
 Once created a configuration file, start collecting tweets!
 
 ```
