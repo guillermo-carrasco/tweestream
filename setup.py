@@ -8,8 +8,8 @@ with open('requirements.txt', 'r') as f:
         install_requires.append(requirement)
 
 setup(name='twistream',
-      version='1.0',
-      description="Automate Twitter stream data collection",
+      version='0.1',
+      description="Automate Twitter Stream data collection",
       author='Guillermo Carrasco',
       author_email='guille.ch.88@gmail.com',
       url='https://github.com/guillermo-carrasco/twistream',
@@ -20,7 +20,7 @@ setup(name='twistream',
       install_requires=install_requires,
       data_files=[(os.path.join(os.environ['HOME'], '.twistream'), [])],
       entry_points={
-        'console_scripts': ['twistream = twistream.cli.cli:entry']
+        'console_scripts': ['twistream = twistream.cli.cli:twistream']
       },
       classifiers=[
         "Programming Language :: Python",
