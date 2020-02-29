@@ -4,35 +4,28 @@ import click
 import tweepy
 import yaml
 
-from twistream.backends.sqlite import SqliteStorageBackend
+from twistream.backends import BACKENDS
 from twistream.log import log
 from twistream.twitter import client, listeners
 
 LOG = log.get_logger()
 
-BACKENDS = {
-    'sqlite': {
-        'object': SqliteStorageBackend,
-        'params': ['db_path']
-    }
-}
 CONFIG_DIR = os.path.join(os.environ['HOME'], '.twistream')
 
 
 @click.group(help='Automate data collection from Twitter streaming API')
-def entry():
+def twistream():
     pass
 
 
-@entry.command(help='Connect to the real-time Twitter Streaming API and start collecting tweets')
+@twistream.command(help='Connect to the real-time Twitter Streaming API and start collecting tweets')
 @click.argument('config_file')
 @click.option('--log-level', type=click.Choice(['INFO', 'DEBUG', 'ERROR']), default='INFO')
-@click.option('--hashtags', type=click.STRING, help='Comma separated list of hashtags to follow (exclude #)')
-@click.option('--exclude-retweets', is_flag=True, help='Do not exclude retweets from the collection')
-def collect(config_file, log_level, hashtags, exclude_retweets):
+@click.option('--tracks', required=True, type=click.STRING, help='Comma separated list of words to follow')
+@click.option('--exclude-retweets', is_flag=True, help='Do not include retweets in the collection process')
+@click.option('--exclude-quotes', is_flag=True, help='Do not include quoted tweets in the collection process')
+def collect(config_file, log_level, tracks, exclude_retweets):
     log.set_level(log_level)
-
-    import ipdb; ipdb.set_trace()
 
     with open(config_file, 'r') as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
@@ -40,23 +33,23 @@ def collect(config_file, log_level, hashtags, exclude_retweets):
     backend = config.get('backend')
     backend_params = config.get('backend_params')
 
-    hashtags = [h for h in hashtags.split(',')] if hashtags is not None else []
+    tracks = [t for t in tracks.split(',')]
 
-    LOG.info(f"Listening for tweets with hashtags: {', '.join(hashtags)}")
+    LOG.info(f"Listening for tweets with the following tracks: {', '.join(tracks)}")
     LOG.info(f'Using {backend} backend')
 
     # Initialize stream listener and start listening
     storage_backend = BACKENDS[backend].get('object')(backend_params)
-    listener = listeners.HashtagListener(storage_backend, exclude_retweets=exclude_retweets)
+    listener = listeners.TracksListener(storage_backend, exclude_retweets=exclude_retweets)
     auth = client.get_api(config.get('twitter').get('consumer_key'),
                           config.get('twitter').get('consumer_secret'),
                           config.get('twitter').get('access_token'),
                           config.get('twitter').get('access_token_secret')).auth
     stream = tweepy.Stream(auth=auth, listener=listener)
-    stream.filter(track=hashtags, is_async=True)
+    stream.filter(track=tracks, is_async=True)
 
 
-@entry.command(help='Create a configuration file to run your data collections')
+@twistream.command(help='Create a configuration file to run your data collections')
 def init():
     click.echo('Before you start your data collection, you need to create a configuration for twistream to ' +
                'be able to connect to twitter API and store your tweets somewhere. First thing you need to do is ' +

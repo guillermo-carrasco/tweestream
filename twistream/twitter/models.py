@@ -5,6 +5,10 @@ Base = declarative_base()
 
 
 class Status(Base):
+    """
+    SQLAlchemy model to represent a status. Can be used with any backend that is supported by SQLAlchemy: i.e sqlite,
+    MySQL or PostgreSQL
+    """
     __tablename__ = "status"
 
     id = Column(Integer, primary_key=True)
