@@ -8,7 +8,7 @@ with open('requirements.txt', 'r') as f:
         install_requires.append(requirement)
 
 setup(name='twistream',
-      version='0.1',
+      version='0.1.1',
       description="Automate Twitter Stream data collection",
       long_description=open('README.md', 'r').read(),
       long_description_content_type="text/markdown",

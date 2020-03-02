@@ -1,5 +1,6 @@
 import os
 
+import pytest
 import yaml
 from click.testing import CliRunner
 
@@ -78,3 +79,12 @@ def test_twistream_collect_no_tracks():
     result = runner.invoke(cli.twistream, ['collect', 'test.yaml'])
     assert result.exit_code == 2  # calling with no arguments does not return "correct"
     assert 'Missing option "--tracks"' in result.output
+
+
+@pytest.mark.xfail(reason='Configuration file does not exist at this point')
+def test_twistream_collect_tracks():
+    """--track option is required"""
+
+    runner = CliRunner()
+    result = runner.invoke(cli.twistream, ['collect', 'test.yaml', '--tracks', 'twitter'])
+    assert result.exit_code == 1

@@ -24,7 +24,7 @@ def twistream():
 @click.option('--tracks', required=True, type=click.STRING, help='Comma separated list of words to follow')
 @click.option('--exclude-retweets', is_flag=True, help='Do not include retweets in the collection process')
 @click.option('--exclude-quotes', is_flag=True, help='Do not include quoted tweets in the collection process')
-def collect(config_file, log_level, tracks, exclude_retweets):
+def collect(config_file, log_level, tracks, exclude_retweets, exclude_quotes):
     log.set_level(log_level)
 
     with open(config_file, 'r') as f:
@@ -40,7 +40,9 @@ def collect(config_file, log_level, tracks, exclude_retweets):
 
     # Initialize stream listener and start listening
     storage_backend = BACKENDS[backend].get('object')(backend_params)
-    listener = listeners.TracksListener(storage_backend, exclude_retweets=exclude_retweets)
+    listener = listeners.TracksListener(storage_backend,
+                                        exclude_retweets=exclude_retweets,
+                                        exclude_quotes=exclude_quotes)
     auth = client.get_api(config.get('twitter').get('consumer_key'),
                           config.get('twitter').get('consumer_secret'),
                           config.get('twitter').get('access_token'),
