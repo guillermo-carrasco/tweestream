@@ -10,8 +10,6 @@ from twistream.twitter import client, listeners
 
 LOG = log.get_logger()
 
-CONFIG_DIR = os.path.join(os.environ['HOME'], '.twistream')
-
 
 @click.group(help='Automate data collection from Twitter streaming API')
 def twistream():
@@ -58,9 +56,10 @@ def init():
                'create a twitter application and get the credentials. Refer to the README file if you don\'t ' +
                'know how to do this.')
 
-    click.echo('\n\nCreating configuration directory...')
-    if not os.path.exists(CONFIG_DIR):
-        os.mkdir(CONFIG_DIR)
+    # Depending on the installation command (i.e pip, setup.py, etc), this directory is not created. Make sure it is
+    config_dir = os.path.join(os.environ['HOME'], '.twistream')
+    if not os.path.exists(config_dir):
+        os.mkdir(config_dir)
 
     click.echo('\n\nFirst things first, your application credentials \n')
 
