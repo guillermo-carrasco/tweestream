@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class BaseStorageBackend(ABC):
 
     @abstractmethod
-    def persist_status(self):
+    def persist_status(self, status):
         """
         This method should store the Status (twit) in the backend database
         """

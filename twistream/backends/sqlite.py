@@ -2,13 +2,17 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from twistream.backends.base import BaseStorageBackend
+from twistream.log import log
 from twistream.twitter.models import Base, Status
+
+LOG = log.get_logger()
 
 
 class SqliteStorageBackend(BaseStorageBackend):
 
     def __init__(self, params):
-        self.engine = create_engine(f'sqlite:///{params.get("db_path")}')
+        LOG.debug(f'DB path: {params.get("db_path")}')
+        self.engine = create_engine(f'sqlite:///{params.get("db_path")}?check_same_thread=False')
         self.session = sessionmaker(bind=self.engine)()
         self.init_backend()
 
