@@ -15,6 +15,12 @@ jobs:
           command: sudo pip install .
           name: Install twistream
       - run:
+          command: black --check --line-length 120 .
+          name: Black formatting
+      - run:
+          command: mypy twistream
+          name: Type checking - myPy
+      - run:
           command: pytest tests -vv
           name: Run tests
 

@@ -6,7 +6,6 @@ LOG = log.get_logger()
 
 
 class TracksListener(StreamListener):
-
     def __init__(self, backend, exclude_retweets=True, exclude_quotes=True, extended_text=True):
         StreamListener.__init__(self)
         self.backend = backend
@@ -21,7 +20,7 @@ class TracksListener(StreamListener):
         """
         # Authorization issues
         if status_code == 401:
-            LOG.error('Authorization went wrong...')
+            LOG.error("Authorization went wrong...")
             return False
 
         # Rate limit
@@ -34,13 +33,13 @@ class TracksListener(StreamListener):
     def on_status(self, status):
         """Action when a new tweet arrives"""
 
-        if self.exclude_retweets and hasattr(status, 'retweeted_status'):
-            LOG.debug(f'Excluding {status.id}. Cause: Retweet')
+        if self.exclude_retweets and hasattr(status, "retweeted_status"):
+            LOG.debug(f"Excluding {status.id}. Cause: Retweet")
 
-        elif self.exclude_quotes and hasattr(status, 'quoted_status'):
-            LOG.debug(f'Excluding {status.id}. Cause: Quote')
+        elif self.exclude_quotes and hasattr(status, "quoted_status"):
+            LOG.debug(f"Excluding {status.id}. Cause: Quote")
 
         else:
-            if self.extended_text and hasattr(status, 'extended_tweet'):
-                status.text = status.extended_tweet.get('full_text')
+            if self.extended_text and hasattr(status, "extended_tweet"):
+                status.text = status.extended_tweet.get("full_text")
             self.backend.persist_status(status)

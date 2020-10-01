@@ -1,5 +1,5 @@
 # Remove building leftovers
-rm -rf build dist *egg-info htmlcov src
+rm -rf build dist *egg-info htmlcov src .pytest_cache
 
 # Remove pyc files
 find . -type f -name *pyc -exec rm {} +

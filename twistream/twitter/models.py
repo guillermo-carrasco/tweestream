@@ -1,14 +1,17 @@
+from typing import Any
+
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
+Base = declarative_base()  # type: Any
 
 
-class Status(Base):
+class TwistreamStatus(Base):
     """
     SQLAlchemy model to represent a status. Can be used with any backend that is supported by SQLAlchemy: i.e sqlite,
     MySQL or PostgreSQL
     """
+
     __tablename__ = "status"
 
     id = Column(Integer, primary_key=True)
@@ -26,4 +29,4 @@ class Status(Base):
         self.followers_count = followers_count
 
     def __repr__(self):
-        return f'<{self.user_handle}: {self.tweet}>'
+        return f"<{self.user_handle}: {self.tweet}>"
