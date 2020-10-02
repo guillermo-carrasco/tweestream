@@ -23,6 +23,7 @@ def twistream():
 @click.option("--tracks", required=True, type=click.STRING, help="Comma separated list of words to follow")
 @click.option("--exclude-retweets", is_flag=True, help="Do not include retweets in the collection process")
 @click.option("--exclude-quotes", is_flag=True, help="Do not include quoted tweets in the collection process")
+@click.option("--exclude-replies", is_flag=True, help="Do not include tweets that are replies to other users")
 @click.option("--extended-text", is_flag=True, help="Replace a truncated tweet with the whole version of it")
 def collect(
     config_file: Path,
@@ -30,6 +31,7 @@ def collect(
     tracks: str,
     exclude_retweets: bool,
     exclude_quotes: bool,
+    exclude_replies: bool,
     extended_text: bool,
 ) -> None:
     log.set_level(log_level)
@@ -48,7 +50,11 @@ def collect(
     # Initialize stream listener and start listening
     storage_backend = BACKENDS[backend].get("object")(backend_params)
     listener = listeners.TracksListener(
-        storage_backend, exclude_retweets=exclude_retweets, exclude_quotes=exclude_quotes, extended_text=extended_text
+        storage_backend,
+        exclude_retweets=exclude_retweets,
+        exclude_quotes=exclude_quotes,
+        exclude_replies=exclude_replies,
+        extended_text=extended_text,
     )
     auth = client.get_api(
         config.get("twitter").get("consumer_key"),

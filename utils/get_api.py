@@ -10,7 +10,7 @@ from twistream.twitter import client
 
 
 def get_api() -> API:
-    with open('config.yaml', 'r') as f:
+    with open("config.yaml", "r") as f:
         config = yaml.load(f, Loader=yaml.FlowMappingEndToken)
 
     return client.get_api(

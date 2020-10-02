@@ -1,5 +1,6 @@
 Version 0.1.2
 
+- Added --exclude-replies option, to skip tweets that are replies to other users
 - Add type annotations and formatting checking
 - Added --extended-text option, to fetch the full tweet text
 - Fixes a bug that made the option --exclude-quotes to not work
