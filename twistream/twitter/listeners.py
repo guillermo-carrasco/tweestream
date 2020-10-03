@@ -1,12 +1,27 @@
-from tweepy import StreamListener
+from typing import Optional
 
+from tweepy import StreamListener, Status
+
+from twistream.backends.base import BaseStorageBackend
 from twistream.log import log
 
 LOG = log.get_logger()
 
 
-class TracksListener(StreamListener):
-    def __init__(self, backend, exclude_retweets=None, exclude_quotes=None, exclude_replies=None, extended_text=None):
+class TwistreamListener(StreamListener):
+    """
+    Custom stream listener. Applies filters like exclude retweets, quotes, etc (defined on object creation) before
+    storing the tweet in the backend.
+    """
+
+    def __init__(
+        self,
+        backend: BaseStorageBackend,
+        exclude_retweets=False,
+        exclude_quotes=False,
+        exclude_replies=False,
+        extended_text=False,
+    ) -> None:
         StreamListener.__init__(self)
         self.backend = backend
         self.exclude_retweets = exclude_retweets
@@ -14,7 +29,7 @@ class TracksListener(StreamListener):
         self.exclude_replies = exclude_replies
         self.extended_text = extended_text
 
-    def on_error(self, status_code):
+    def on_error(self, status_code: int) -> bool:
         """Handles Twitter API error codes
 
         Check: https://developer.twitter.com/en/docs/basics/response-codes
@@ -30,8 +45,9 @@ class TracksListener(StreamListener):
             return False
 
         # returning non-False reconnects the stream, with backoff.
+        return True
 
-    def on_status(self, status):
+    def on_status(self, status: Status) -> None:
         """Action when a new tweet arrives"""
 
         if self.extended_text and hasattr(status, "extended_tweet"):

@@ -49,7 +49,7 @@ def collect(
 
     # Initialize stream listener and start listening
     storage_backend = BACKENDS[backend].get("object")(backend_params)
-    listener = listeners.TracksListener(
+    listener = listeners.TwistreamListener(
         storage_backend,
         exclude_retweets=exclude_retweets,
         exclude_quotes=exclude_quotes,
