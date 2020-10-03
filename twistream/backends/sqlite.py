@@ -23,7 +23,12 @@ class SqliteStorageBackend(BaseStorageBackend):
 
     def persist_status(self, status: Status) -> None:
         s = TwistreamStatus(
-            status.id, status.text, status.created_at, status.user.screen_name, status.user.followers_count
+            status.id,
+            status.text,
+            status.created_at,
+            status.user.screen_name,
+            status.user.id,
+            status.user.followers_count,
         )
         self.session.add(s)
         self.session.commit()
