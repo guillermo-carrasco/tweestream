@@ -9,7 +9,7 @@ with open("requirements.txt", "r") as f:
 
 setup(
     name="twistream",
-    version="0.1.2",
+    version="0.1.3",
     description="Automate Twitter Stream data collection",
     long_description=open("README.md", "r").read(),
     long_description_content_type="text/markdown",

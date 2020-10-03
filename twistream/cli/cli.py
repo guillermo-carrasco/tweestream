@@ -91,7 +91,7 @@ def init() -> None:
 
     backend = ""
     while backend not in BACKENDS.keys():
-        backend = input(f'Choose from: {["|".join(BACKENDS.keys())]}: ')
+        backend = input(f'Choose from: {[" | ".join(BACKENDS.keys())]}: ')
 
     params_list = BACKENDS[backend].get("params")
     params = dict()

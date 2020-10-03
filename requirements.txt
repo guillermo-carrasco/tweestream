@@ -1,6 +1,7 @@
 black
 click
 mypy
+pymongo
 pytest
 pyyaml
 sqlalchemy
