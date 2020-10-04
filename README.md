@@ -55,7 +55,7 @@ __**Remember that `--help` is always an available option**__
 Once created a configuration file, start collecting tweets!
 
 ```
-twistream collect --tracks tracks,to,follow
+twistream collect --tracks tracks,to,follow config.yaml
 ```
 
 Refer to the [twitter documentation][streaming-docs] to know what tracks are, in short: 
@@ -66,17 +66,36 @@ Refer to the [twitter documentation][streaming-docs] to know what tracks are, in
 > By this model, you can think of commas as logical ORs, while spaces are equivalent to 
 > logical ANDs (e.g. ‘the twitter’ is the AND twitter, and ‘the,twitter’ is the OR twitter).
 
-If what you want is to follow hashtags, don't forget to include the `#` character.
+If what you want is to follow **hashtags**, don't forget to include the `#` character.
 
 ### Supported backends
-Right now twistream only supports sqlite, the `backend` and `backend_params` sections in your
-configuration file should look like this:
+
+From version 0.1.3, twistream supports two backends. A relational database (SQLite) and a no-sql database (MongoDB). 
+
+NOTE that the SQLite backend will only save a couple of tweet fields, whilst the MongoDB backend will save the whole blob.
+It is a trade off between information and storage space. 
+
+#### Backend params format
+
+##### SQLite
 
 ```
 backend: sqlite
 
 backend_params:
-    db: /path/to/your/db
+    db_path: /path/to/your/db
 ```
 
+##### MongoDB
+
+```
+backend: mongodb
+
+backend_params:
+    db_string: database_connection_string
+```
+
+(See database connection string documentation)
+
 [streaming-docs]: https://developer.twitter.com/en/docs/tweets/filter-realtime/guides/basic-stream-parameters
+[connection-string]: https://pymongo.readthedocs.io/en/stable/tutorial.html#making-a-connection-with-mongoclient

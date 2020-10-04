@@ -1,3 +1,9 @@
+Version 0.1.4
+
+- Adds parameter "collection_name" to the MongoDB backend. With this, you can run different experiments in parallel and
+store the twits in different collections
+
+
 Version 0.1.3
 
 - Added backend for MongoDB: Stores the whole JSON blob for the tweet, no defined fields

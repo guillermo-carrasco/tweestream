@@ -1,5 +1,3 @@
-from typing import Optional
-
 from tweepy import StreamListener, Status
 
 from twistream.backends.base import BaseStorageBackend
@@ -45,6 +43,7 @@ class TwistreamListener(StreamListener):
             return False
 
         # returning non-False reconnects the stream, with backoff.
+        LOG.debug('Reconnecting the stream')
         return True
 
     def on_status(self, status: Status) -> None:
